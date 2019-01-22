@@ -23,3 +23,10 @@ blueView
   .setSize(width: 10)
   .setSize(height: 50, width: 100)
 ```
+
+5. Установить соответствие размеров между видами
+```swift
+blueView
+  .setEqual(.height, to: redView)
+  .setEqual(.width, to: redView)
+```
