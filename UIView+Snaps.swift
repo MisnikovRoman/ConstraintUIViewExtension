@@ -1,5 +1,6 @@
 extension UIView {
     enum Direction { case left, right, top, bottom }
+    enum Dimension { case height, width }
     
     @discardableResult
     func snap(inside view: UIView, with insets: UIEdgeInsets) -> UIView {
@@ -80,13 +81,27 @@ extension UIView {
     }
     
     @discardableResult
-    func setSize(heigth: CGFloat? = nil, width: CGFloat? = nil) -> UIView {
+    func setSize(height: CGFloat? = nil, width: CGFloat? = nil) -> UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
-        if let h = heigth {
+        if let h = height {
             self.heightAnchor.constraint(equalToConstant: h).isActive = true
         }
         if let w = width {
             self.widthAnchor.constraint(equalToConstant: w).isActive = true
+        }
+        
+        return self
+    }
+    
+    @discardableResult
+    func setEqual(_ dimension: Dimension, to view: UIView) -> UIView {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        switch dimension {
+        case .height:
+            self.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        case .width:
+            self.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         }
         
         return self
