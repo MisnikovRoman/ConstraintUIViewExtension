@@ -1,19 +1,12 @@
-//
-//  UIView+snap.swift
-//  Prototype
-//
-//  Created by Мисников Роман on 26/01/2019.
-//  Copyright © 2019 MisnikovRoman. All rights reserved.
-//
-
 import UIKit
 
-extension UIView {
-	enum Direction { case left, right, top, bottom }
-	enum Dimension { case height, width }
+public extension UIView {
+	public enum Direction { case left, right, top, bottom }
+	public enum Dimension { case height, width }
+	public enum Axis { case x, y }
 
 	@discardableResult
-	func snap(inside view: UIView, with insets: UIEdgeInsets, except exceptionList: [Direction] = []) -> UIView {
+	public func snap(inside view: UIView, with insets: UIEdgeInsets, except exceptionList: [Direction] = []) -> UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 
 		if !exceptionList.contains(.top) {
@@ -44,7 +37,7 @@ extension UIView {
 	}
 
 	@discardableResult
-	func snap(to view: UIView, from direction: Direction, at distance: CGFloat) -> UIView {
+	public func snap(to view: UIView, from direction: Direction, at distance: CGFloat) -> UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 		switch direction {
 		case .top:
@@ -73,7 +66,7 @@ extension UIView {
 	}
 
 	@discardableResult
-	func snap(inside view: UIView, from direction: Direction, at distance: CGFloat) -> UIView {
+	public func snap(inside view: UIView, from direction: Direction, at distance: CGFloat) -> UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 		switch direction {
 		case .top:
@@ -102,7 +95,7 @@ extension UIView {
 	}
 
 	@discardableResult
-	func setSize(height: CGFloat? = nil, width: CGFloat? = nil) -> UIView {
+	public func setSize(height: CGFloat? = nil, width: CGFloat? = nil) -> UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 		if let h = height {
 			self.heightAnchor.constraint(equalToConstant: h).isActive = true
@@ -115,7 +108,7 @@ extension UIView {
 	}
 
 	@discardableResult
-	func setEqual(_ dimension: Dimension, to view: UIView) -> UIView {
+	public func setEqual(_ dimension: Dimension, to view: UIView) -> UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 
 		switch dimension {
@@ -125,6 +118,27 @@ extension UIView {
 			self.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
 		}
 
+		return self
+	}
+
+	@discardableResult
+	public func setWidthToHeightProportion(to proportion: CGFloat) -> UIView {
+		self.translatesAutoresizingMaskIntoConstraints = false
+
+		self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: proportion).isActive = true
+		return self
+	}
+
+	@discardableResult
+	public func center( _ axis: Axis, to view: UIView) -> UIView {
+		self.translatesAutoresizingMaskIntoConstraints = false
+
+		switch axis {
+		case .x:
+			self.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+		case .y:
+			self.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+		}
 		return self
 	}
 }

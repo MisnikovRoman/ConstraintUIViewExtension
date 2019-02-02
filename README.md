@@ -30,3 +30,9 @@ blueView
   .setEqual(.height, to: redView)
   .setEqual(.width, to: redView)
 ```
+
+6. Соответствие центральных осей
+```swift
+blueView
+  .center(.x, to: redView)
+```
