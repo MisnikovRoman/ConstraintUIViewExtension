@@ -141,4 +141,27 @@ public extension UIView {
 		}
 		return self
 	}
+	
+	@discardableResult
+	public func align(_ directions: [Direction], with view: UIView) -> UIView {
+		self.translatesAutoresizingMaskIntoConstraints = false
+
+		directions.forEach {
+			switch $0 {
+			case .left:
+				self.leftAnchor
+					.constraint(equalTo: view.leftAnchor).isActive = true
+			case .right:
+				self.rightAnchor
+					.constraint(equalTo: view.rightAnchor).isActive = true
+			case .top:
+				self.topAnchor
+					.constraint(equalTo: view.topAnchor).isActive = true
+			case .bottom:
+				self.bottomAnchor
+					.constraint(equalTo: view.bottomAnchor).isActive = true
+			}
+		}
+		return self
+	}
 }
